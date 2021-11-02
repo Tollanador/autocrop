@@ -218,6 +218,11 @@ class Cropper:
         
         image = Image.fromarray(image)
         image = image.resize((self.width, self.height), Image.LANCZOS)
+        
+        # convert back to cv2 image format for ez compatability
+        image = np.array(image) 
+        # Convert RGB to BGR 
+        image = image[:, :, ::-1].copy()
 
         # Underexposition
         if self.gamma:
