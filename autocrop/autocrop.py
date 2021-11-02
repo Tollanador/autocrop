@@ -86,13 +86,14 @@ def open_file(input_filename):
     """Given a filename, returns a numpy array"""
     extension = os.path.splitext(input_filename)[1].lower()
 
-    if extension in CV2_FILETYPES:
-        # Try with cv2
-        return cv2.imread(input_filename)
+    #pref PIL 1st
     if extension in PILLOW_FILETYPES:
         # Try with PIL
         with Image.open(input_filename) as img_orig:
             return np.asarray(img_orig)
+    if extension in CV2_FILETYPES:
+        # Try with cv2
+        return cv2.imread(input_filename)
     return None
 
 
@@ -210,8 +211,13 @@ class Cropper:
         image = image[pos[0] : pos[1], pos[2] : pos[3]]
 
         # Resize
-        image = cv2.resize(
-            image, (self.width, self.height), interpolation=cv2.INTER_AREA
+        
+        # Using PIL to resize to avoid causing aliasing issues as per the following paper:
+        # "On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation"
+        # https://arxiv.org/abs/2104.11222
+        
+        image = Image.fromarray(image)
+        image = image.resize((self.width, self.height), Image.LANCZOS)
         )
 
         # Underexposition
