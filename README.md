@@ -1,6 +1,8 @@
 Changes from original repo:
 
-<li>Swapped resize sampling technique from cv2 to PIL and using lanczos as per: [On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](https://arxiv.org/abs/2104.11222)</li>
+<li>Swapped resize sampling technique from cv2 to PIL and using lanczos as per: On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation</li>
+
+https://arxiv.org/abs/2104.11222
 
 # autocrop
 
