@@ -218,7 +218,6 @@ class Cropper:
         
         image = Image.fromarray(image)
         image = image.resize((self.width, self.height), Image.LANCZOS)
-        )
 
         # Underexposition
         if self.gamma:
